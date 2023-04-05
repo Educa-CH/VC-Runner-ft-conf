@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, session, request
+from flask import Flask, render_template, jsonify, session, request, redirect, url_for
 from configparser import ConfigParser
 import qrcode
 import requests
@@ -26,8 +26,23 @@ value3 = config.get('VALUES', 'VALUE3').strip("'")
     #    response.headers['X-Frame-Options'] = 'ALLOW-FROM https://educa.ch'
     #    return response
 
+@app.route('/de')
+def set_language_de():
+    session['lang'] = 'de'
+    return redirect(url_for('index'))
+
+@app.route('/fr')
+def set_language_fr():
+    session['lang'] = 'fr'
+    return redirect(url_for('index'))
+
+
 @app.route('/')
 def index():
+    # set default language to german if not set
+    if 'lang' not in session:
+        session['lang'] = 'de'
+
     url = connection_url+ '/connection/invitation'
     response = requests.post(url)
     data = json.loads(response.text)
@@ -39,7 +54,13 @@ def index():
     img = qr.make_image(fill_color="black", back_color="white")
     img.save("static/images/dynamic_url_qr.png")  # Save the QR code image to a file
 
-    return render_template('index.html', qr_image='static/images/dynamic_url_qr.png')
+    # Set the prompt based on the language
+    if session['lang'] == 'de':
+        prompt = 'Scannen Sie diesen QR-Code mit ihrer elektronischen Brieftasche (Lissie Wallet) und folgen Sie den weiteren Schritten in der App'
+    elif session['lang'] == 'fr':
+        prompt = 'Veuillez scanner le QR code avec votre application de portefeuille'
+
+    return render_template('index.html', qr_image='static/images/dynamic_url_qr.png', prompt=prompt)
 
 @app.route('/check_connection/')
 def check_connection():
@@ -57,12 +78,16 @@ def check_connection():
 def name():
     if request.method == 'POST':
         name = request.form['name']
+        surname = request.form['surname']
+        institution = request.form['institution']
+        # Make a POST request to the API endpoint
         url = issuer_url + '/issue/process'
         data = {
             "connectionId": session['connection'],
             "credentialDefinitionId": cred_def,
             "attributes": {
-                attr1: name,
+                attr1: name + ' ' + surname,
+                #TODO missing institution
                 attr2: value2,
                 attr3: value3
             },
@@ -81,13 +106,26 @@ def name():
             data = json.loads(response.text)
             session['processId'] = data['processId']
 
-            return render_template('loading.html')
+            if session['lang'] == 'de':
+                prompt = 'Bitte akzeptieren Sie den gesendeten digitalen Nachweis in ihrer elektronischen Brieftasche (Lissie Wallet)'
+            elif session['lang'] == 'fr':
+                prompt = 'Veuillez accepter le certificat numérique envoyé dans votre portefeuille'    
+
+            return render_template('loading.html', prompt=prompt)
 
         else:
             return render_template('failure.html')    
     else:
+        # Set the prompt based on the language
+        if session['lang'] == 'de':
+            prompt = 'Bitte füllen Sie das Formular aus und klicken Sie auf "Absenden"'
+            button = 'Absenden'
+        elif session['lang'] == 'fr':
+            prompt = 'Veuillez remplir le formulaire et cliquer sur "Envoyer"'
+            button = 'Envoyer'
+
         #just show the page
-        return render_template('name.html')
+        return render_template('name.html', prompt=prompt, button=button)
 
 
 @app.route('/loading/')
@@ -104,7 +142,11 @@ def loading():
 
 @app.route('/success')
 def success():
-    return render_template('success.html')        
+    if session['lang'] == 'de':
+        prompt = 'Herzliche Gratuliation, Sie haben soebene die Anmeldung zur Fachtagung als digitalen Nachweis erhalten (nur gültig bei erfolgter Zahlung der Teilnahmegebühr)'
+    elif session['lang'] == 'fr':
+        prompt = 'Félicitations, vous avez reçu un certificat numérique pour votre inscription à la conférence (valable uniquement après paiement de la participation)'
+    return render_template('success.html', prompt=prompt)        
   
 
 if __name__ == "__main__":

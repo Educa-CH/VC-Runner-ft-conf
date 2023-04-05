@@ -25,7 +25,7 @@
 
 {% block index %}
 
-    <h2>Scanne den QR-Code</h2>
+    <h2>{{ prompt }}</h2>
     <img src="{{ url_for('static', filename='images/dynamic_url_qr.png') }}">
 
 {% endblock %}
