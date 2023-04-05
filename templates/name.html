@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block index %}
-<form action="" method="post">
-    <label>{{ prompt }}</label>
+<h2>{{ prompt }}</h2>
+<form action="" method="post">  
     <br>
     <label for="input-box-name">{{ name }}</label>
     <input type="text" id="input-box-name" name="name" required>
@@ -15,8 +15,8 @@
     <label for="input-box-surname">{{ surname }}</label>
     <input type="text" id="input-box-surname" name="surname" required>
     <br>
-    <label for="input-box-institution">Institution</label>
-    <input type="text" id="input-box-surname-institution" name="institution" required>
+    <label for="input-box-institution">Institution:</label>
+    <input type="text" id="input-box-institution" name="institution" required>
     <br>
     <button type="submit">{{ button }}</button>
   </form>
