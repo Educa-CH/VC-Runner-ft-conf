@@ -119,13 +119,17 @@ def name():
         # Set the prompt based on the language
         if session['lang'] == 'de':
             prompt = 'Bitte füllen Sie das Formular aus und klicken Sie auf "Absenden"'
+            name = 'Name'
+            surname = 'Vorname'
             button = 'Absenden'
         elif session['lang'] == 'fr':
             prompt = 'Veuillez remplir le formulaire et cliquer sur "Envoyer"'
+            name = 'Nom'
+            surname = 'Prénom'
             button = 'Envoyer'
 
         #just show the page
-        return render_template('name.html', prompt=prompt, button=button)
+        return render_template('name.html', prompt=prompt, button=button, name=name, surname=surname)
 
 
 @app.route('/loading/')
