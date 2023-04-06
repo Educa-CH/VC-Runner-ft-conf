@@ -97,6 +97,9 @@ def name():
         }
         print(data)
 
+        with open("registered.txt", "a") as file:
+            file.write( json.dumps(data) + "\n")
+
         headers = {"Content-Type": "application/json"}
 
         response = requests.post(
@@ -110,10 +113,12 @@ def name():
 
             if session['lang'] == 'de':
                 prompt = 'Bitte akzeptieren Sie den gesendeten digitalen Nachweis in ihrer elektronischen Brieftasche (Lissie Wallet)'
+                notice = 'Hinweis: Der Educa Agent dient nur zu Demonstrationszwecken und ist daher nicht verifiziert. Bitte nehmen Sie den digitalen Nachweis trotzdem an.'
             elif session['lang'] == 'fr':
-                prompt = 'Veuillez accepter le certificat numérique envoyé dans votre portefeuille'    
+                prompt = 'Veuillez accepter le certificat numérique envoyé dans votre portefeuille'   
+                notice = 'Note: L\'agent Educa est uniquement à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter le certificat numérique.' 
 
-            return render_template('loading.html', prompt=prompt)
+            return render_template('loading.html', prompt=prompt, notice=notice)
 
         else:
             return render_template('failure.html')    
