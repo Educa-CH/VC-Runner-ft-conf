@@ -14,3 +14,5 @@ venv.bak/
 /static/images/dynanic_url_qr.png
 
 registered.txt
+
+api-script.py

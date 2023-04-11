@@ -16,8 +16,7 @@ cred_def = config.get('CREDENTIAL_DEFINITION', 'CREDENTIAL_DEFINITION').strip("'
 attr1 = config.get('ATTRIBUTES', 'ATTR1').strip("'")
 attr2 = config.get('ATTRIBUTES', 'ATTR2').strip("'")
 attr3 = config.get('ATTRIBUTES', 'ATTR3').strip("'")
-value2 = config.get('VALUES', 'VALUE2').strip("'")
-value3 = config.get('VALUES', 'VALUE3').strip("'")
+
 
 # allow site to be embedded in educa.ch 
 # potentially used to emebed as iFrame
@@ -79,7 +78,7 @@ def check_connection():
 @app.route('/name', methods=['POST', 'GET'])      
 def name():
     if request.method == 'POST':
-        name = request.form['name']
+        prename = request.form['prename']
         surname = request.form['surname']
         institution = request.form['institution']
         # Make a POST request to the API endpoint
@@ -88,22 +87,25 @@ def name():
             "connectionId": session['connection'],
             "credentialDefinitionId": cred_def,
             "attributes": {
-                attr1: name + ' ' + surname,
-                #TODO missing institution
-                attr2: value2,
-                attr3: value3
+                attr1: prename,
+                attr2: surname,
+                attr3: institution
             },
             "userId": "Anonymous"
         }
-        print(data)
 
-        with open("registered.txt", "a") as file:
-            file.write( json.dumps(data) + "\n")
+        
 
         headers = {"Content-Type": "application/json"}
 
         response = requests.post(
             url,
+            json=data,
+            headers=headers)
+        
+        # api call to "make" which acts as DB
+        requests.post(
+            'https://hook.eu1.make.com/jfjdbozvzudhgjev3f8mwvv8gl49fmq8',
             json=data,
             headers=headers)
 
