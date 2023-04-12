@@ -7,6 +7,9 @@ import json
 
 app = Flask(__name__)
 
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
+
 config = ConfigParser()
 config.read('config.ini')
 app.secret_key = config.get('DEFAULT', 'SECRET_KEY', )
