@@ -4,15 +4,17 @@ from configparser import ConfigParser
 import qrcode
 import requests
 import json
-
+import redis
+import os
 
 app = Flask(__name__)
 
-app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = redis.from_url(os.environ.get("REDIS_URL"))
 
 config = ConfigParser()
 config.read('config.ini')
-app.secret_key = config.get('DEFAULT', 'SECRET_KEY', )
+#app.secret_key = config.get('DEFAULT', 'SECRET_KEY', )
 connection_url = config.get('ENDPOINTS', 'CONNECTION_URL').strip("'")
 issuer_url = config.get('ENDPOINTS', 'ISSUER_URL').strip("'")
 cred_def = config.get('CREDENTIAL_DEFINITION', 'CREDENTIAL_DEFINITION').strip("'")
@@ -21,7 +23,6 @@ attr2 = config.get('ATTRIBUTES', 'ATTR2').strip("'")
 attr3 = config.get('ATTRIBUTES', 'ATTR3').strip("'")
 
 Session(app)
-
 # allow site to be embedded in educa.ch 
 # potentially used to emebed as iFrame
     #@app.after_request
