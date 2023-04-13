@@ -16,3 +16,5 @@ venv.bak/
 registered.txt
 
 api-script.py
+
+flask_session/*

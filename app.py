@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, session, request, redirect, url_for
+from flask_session import Session
 from configparser import ConfigParser
 import qrcode
 import requests
@@ -7,8 +8,7 @@ import json
 
 app = Flask(__name__)
 
-app.config['SESSION_COOKIE_SAMESITE'] = 'None'
-app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_TYPE'] = 'filesystem'
 
 config = ConfigParser()
 config.read('config.ini')
@@ -20,6 +20,7 @@ attr1 = config.get('ATTRIBUTES', 'ATTR1').strip("'")
 attr2 = config.get('ATTRIBUTES', 'ATTR2').strip("'")
 attr3 = config.get('ATTRIBUTES', 'ATTR3').strip("'")
 
+Session(app)
 
 # allow site to be embedded in educa.ch 
 # potentially used to emebed as iFrame
