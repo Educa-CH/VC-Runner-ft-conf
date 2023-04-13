@@ -1,19 +1,11 @@
 from flask import Flask, render_template, jsonify, session, request, redirect, url_for
-from flask_session import Session
 from configparser import ConfigParser
-from datetime import timedelta
 import qrcode
 import requests
 import json
-import redis
-import os
 
 app = Flask(__name__)
 
-app.config['SESSION_TYPE'] = 'redis'
-app.config['SESSION_REDIS'] = redis.from_url(os.environ.get("REDISCLOUD_URL"))
-#use for local testing
-#app.config['SESSION_REDIS'] = redis.from_url('redis://localhost:6379')
 
 config = ConfigParser()
 config.read('config.ini')
@@ -25,15 +17,14 @@ attr1 = config.get('ATTRIBUTES', 'ATTR1').strip("'")
 attr2 = config.get('ATTRIBUTES', 'ATTR2').strip("'")
 attr3 = config.get('ATTRIBUTES', 'ATTR3').strip("'")
 
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=24)
 
-Session(app)
 # allow site to be embedded in educa.ch 
 # potentially used to emebed as iFrame
-    #@app.after_request
-    #def add_header(response):
-    #    response.headers['X-Frame-Options'] = 'ALLOW-FROM https://educa.ch'
-    #    return response
+ 
+#@app.after_request
+#def add_header(response):
+#    response.headers['X-Frame-Options'] = 'ALLOW-FROM https://educa.ch'
+#    return response
 
 @app.route('/de')
 def set_language_de():
