@@ -2,13 +2,17 @@ from flask import Flask, render_template, jsonify, session, request, redirect, u
 from configparser import ConfigParser
 from flask_talisman import Talisman
 from flask_session import Session
+from flask_cors import CORS
 import qrcode
 import requests
 import json
 
 app = Flask(__name__)
+
+CORS(app, origins=['https://educa.ch', 'https://integration.educa.ch'])
+
 talisman = Talisman(app, content_security_policy={
-    'frame-ancestors': '\'self\' educa.ch'
+    'frame-ancestors': ['\'self\'', 'educa.ch', 'integration.educa.ch']
 })
 
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
