@@ -9,10 +9,10 @@ import json
 
 app = Flask(__name__)
 
-CORS(app, origins=['https://educa.ch', 'https://integration.educa.ch'])
+CORS(app)
 
-talisman = Talisman(app, content_security_policy={
-    'frame-ancestors': ['\'self\'', 'educa.ch', 'integration.educa.ch']
+Talisman(app, content_security_policy={
+    'default-src': ["'self'", '*']
 })
 
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
