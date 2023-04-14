@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, session, request, redirect, url_for
 from configparser import ConfigParser
 from flask_talisman import Talisman
+from flask_session import Session
 import qrcode
 import requests
 import json
@@ -13,7 +14,9 @@ talisman = Talisman(app, content_security_policy={
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
 
-
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_THRESHOLD'] = 500  # Set a threshold for the number of files before cleanup
+Session(app)
 
 config = ConfigParser()
 config.read('config.ini')
