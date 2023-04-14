@@ -1,12 +1,19 @@
 from flask import Flask, render_template, jsonify, session, request, redirect, url_for
 from configparser import ConfigParser
+from flask_talisman import Talisman
 import qrcode
 import requests
 import json
 
 app = Flask(__name__)
+talisman = Talisman(app, content_security_policy={
+    'frame-ancestors': '\'self\' educa.ch'
+})
+
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
+
+
 
 config = ConfigParser()
 config.read('config.ini')
