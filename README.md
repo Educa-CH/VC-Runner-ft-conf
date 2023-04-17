@@ -45,6 +45,36 @@ The app has four main routes:
 
 /success - This route is displayed after the user has successfully submitted their name and the external API has accepted the credential.
 
+## Security
+This application includes several security measures:
+
+Cross-Origin Resource Sharing (CORS) is enabled using the CORS extension for Flask.
+The Talisman extension is used to set a default content security policy for the app, allowing resources to be loaded from the same origin, any origin, or unsafe inline content.
+The SESSION_COOKIE_SAMESITE attribute is set to "None", allowing session cookies to be sent with cross-site requests.
+The SESSION_COOKIE_SECURE attribute is set to True, ensuring that session cookies are only sent over secure connections.
+User sessions are managed using the Flask-Session extension, which stores session data on the file system and performs cleanup when the number of files reaches a certain threshold.
+
+## Setting up Gunicorn
+Run the Flask application using Gunicorn:
+
+Make sure to replace register-ft.educa.ch with your own domain name in `gunicorn.conf.py`, and the paths to the SSL certificate files with the correct paths for your own system.
+
+To start the Gunicorn server, run the following command in your terminal:
+
+```
+gunicorn app:app -c gunicorn.conf.py &
+```
+This will start the server with the specified configuration, and run it in the background (& at the end of the command). You should see output similar to the following:
+
+```
+[2023-04-17 12:34:56 +0000] [1234] [INFO] Starting gunicorn 20.1.0
+[2023-04-17 12:34:56 +0000] [1234] [INFO] Listening at: https://register-ft.educa.ch:443 (1234)
+[2023-04-17 12:34:56 +0000] [1234] [INFO] Using worker: gthread
+[2023-04-17 12:34:56 +0000] [1237] [INFO] Booting worker with pid: 1237
+[2023-04-17 12:34:56 +0000] [1238] [INFO] Booting worker with pid: 1238
+You can now access the web application by visiting https://register-ft.educa.ch in your web browser.
+```
+
 ## Files
 The app consists of a single Python file, app.py, which contains all the routes and logic for the app. The file is organized into four main sections, each containing the logic for one of the app's routes.
 

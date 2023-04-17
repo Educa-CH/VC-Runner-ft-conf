@@ -11,8 +11,8 @@ app = Flask(__name__)
 
 CORS(app)
 
-Talisman(app, content_security_policy={
-    'default-src': ["'self'", '*']
+talisman = Talisman(app, content_security_policy={
+    'default-src': ["'self'", "*", "'unsafe-inline'"]
 })
 
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
@@ -79,7 +79,7 @@ def index():
 
     return render_template('index.html', qr_image='static/images/dynamic_url_qr.png', prompt=prompt, notice=notice)
 
-@app.route('/check_connection/')
+@app.route('/check-connection/')
 def check_connection():
     # Check the connection status by making a GET request to the API endpoint
     url = connection_url+  '/connection/' + session['connection'] 
