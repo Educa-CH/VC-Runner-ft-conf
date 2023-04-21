@@ -9,4 +9,4 @@ errorlog = 'logs/error'
 capture_output = True
 timeout = 120
 
-# start with: gunicorn app:app -c gunicorn.conf.py &
+#gunicorn app:app -c gunicorn.conf.py --log-level=debug

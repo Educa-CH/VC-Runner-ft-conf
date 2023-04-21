@@ -7,18 +7,15 @@
 
 {% block index %}
 <h2>{{ prompt }}</h2>
+<br>
 <form action="" method="post">  
-    <br>
-    <label for="input-box-surname">{{ name }}</label>
-    <input type="text" id="input-box-surname" name="surname" required>
-    <br>
-    <label for="input-box-prename">{{ surname }}</label>
-    <input type="text" id="input-box-prename" name="prename" required>
-    <br>
-    <label for="input-box-institution">Institution:</label>
-    <input type="text" id="input-box-institution" name="institution" required>
-    <br>
-    <button type="submit">{{ button }}</button>
-  </form>
+  <label for="input-box-surname">{{ name }}</label>
+  <input type="text" id="input-box-surname" name="surname" required>
+  <label for="input-box-prename">{{ surname }}</label>
+  <input type="text" id="input-box-prename" name="prename" required>
+  <label for="input-box-institution">Institution:</label>
+  <input type="text" id="input-box-institution" name="institution" required>
+  <button type="submit">{{ button }}</button>
+</form>
 
 {% endblock %}
