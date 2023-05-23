@@ -12,7 +12,9 @@ app = Flask(__name__)
 CORS(app)
 
 talisman = Talisman(app, content_security_policy={
-    'default-src': ["'self'", "*", "'unsafe-inline'"]
+    'default-src': ["'self'", "*", "'unsafe-inline'"],
+    'frame-ancestors': ["'self'", '*'],
+    'style-src-elem': ["'self'", 'data:']
 })
 
 
