@@ -74,11 +74,11 @@ def index():
 
     # Set the prompt based on the language
     if session['lang'] == 'de':
-        prompt = 'Scannen Sie diesen QR-Code mit ihrer elektronischen Brieftasche (Lissie Wallet) und folgen Sie den weiteren Schritten in der App'
+        prompt = 'Scannen Sie den QR-Code mit Ihrer elektronischen Brieftasche (Lissi Wallet) und folgen Sie den weiteren Schritten in der App.'
         notice = 'Hinweis: Der Educa Agent dient nur zu Demonstrationszwecken und ist daher nicht verifiziert. Bitte nehmen Sie die Verbindungseinladung trotzdem an.'
     elif session['lang'] == 'fr':
-        prompt = 'Veuillez scanner le QR code avec votre application de portefeuille'
-        notice = 'Note: L\'agent Educa est uniquement à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter l\'invitation de connexion.'
+        prompt = 'Scannez le code QR avec votre portefeuille électronique (Lissi wallet) et suivez les étapes suivantes dans l\'application.'
+        notice = 'Remarque: l\'Educa Agent ne sert qu\'à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter l\'invitation pour vous connecter.'
 
     return render_template('index.html', qr_image='static/images/dynamic_url_qr.png', prompt=prompt, notice=notice)
 
@@ -133,11 +133,11 @@ def name():
             session['processId'] = data['processId']
 
             if session['lang'] == 'de':
-                prompt = 'Bitte akzeptieren Sie den gesendeten digitalen Nachweis in ihrer elektronischen Brieftasche (Lissie Wallet)'
+                prompt = 'Bitte akzeptieren Sie den gesendeten digitalen Nachweis in Ihrer elektronischen Brieftasche (Lissi Wallet).'
                 notice = 'Hinweis: Der Educa Agent dient nur zu Demonstrationszwecken und ist daher nicht verifiziert. Bitte nehmen Sie den digitalen Nachweis trotzdem an.'
             elif session['lang'] == 'fr':
-                prompt = 'Veuillez accepter le certificat numérique envoyé dans votre portefeuille'   
-                notice = 'Note: L\'agent Educa est uniquement à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter le certificat numérique.' 
+                prompt = 'Veuillez accepter le justificatif numérique envoyé dans votre portefeuille électronique (Lissi wallet).'   
+                notice = 'Remarque: l\'Educa Agent ne sert qu\'à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter le justificatif numérique.' 
 
             return render_template('loading.html', prompt=prompt, notice=notice)
 
@@ -146,15 +146,15 @@ def name():
     else:
         # Set the prompt based on the language
         if session['lang'] == 'de':
-            prompt = 'Bitte füllen Sie das Formular aus und klicken Sie auf "Absenden"'
+            prompt = 'Bitte füllen Sie das Formular aus und klicken Sie auf «absenden».'
             name = 'Name:'
             surname = 'Vorname:'
-            button = 'Absenden'
+            button = 'absenden'
         elif session['lang'] == 'fr':
-            prompt = 'Veuillez remplir le formulaire et cliquer sur "Envoyer"'
+            prompt = 'Veuillez remplir le formulaire et cliquer sur «envoyer».'
             name = 'Nom:'
             surname = 'Prénom:'
-            button = 'Envoyer'
+            button = 'envoyer'
 
         #just show the page
         return render_template('name.html', prompt=prompt, button=button, name=name, surname=surname)
@@ -175,9 +175,9 @@ def loading():
 @app.route('/success')
 def success():
     if session['lang'] == 'de':
-        prompt = 'Herzliche Gratuliation, Sie haben soebene die Anmeldung zur Fachtagung als digitalen Nachweis erhalten (nur gültig bei erfolgter Zahlung der Teilnahmegebühr)'
+        prompt = 'Herzliche Gratulation, Sie haben soeben die Anmeldung zur Fachtagung als digitalen Nachweis erhalten.'
     elif session['lang'] == 'fr':
-        prompt = 'Félicitations, vous avez reçu un certificat numérique pour votre inscription à la conférence (valable uniquement après paiement de la participation)'
+        prompt = 'Félicitations, vous venez de recevoir votre inscription au colloque sous forme de justificatif numérique.'
     return render_template('success.html', prompt=prompt)        
   
 
