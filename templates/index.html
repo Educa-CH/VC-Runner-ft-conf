@@ -9,7 +9,7 @@
             // Periodically check the connection status
             setInterval(function() {
                 $.ajax({
-                    url: '/check_connection',
+                    url: '/check-connection',
                     success: function(data) {
                         if (data.status == 'connected') {
                             // Connection has been established, redirect to the next page
