@@ -157,7 +157,7 @@ def name():
             button = 'envoyer'
 
         #just show the page
-        return render_template('name.html', prompt=prompt, button=button, name=name, surname=surname)
+        return render_template('name.html', prompt=prompt, button=button, prename=prename, surname=surname)
 
 
 @app.route('/loading/')
