@@ -3,6 +3,7 @@ from configparser import ConfigParser
 from flask_talisman import Talisman
 from flask_session import Session
 from flask_cors import CORS
+from PIL import Image
 import qrcode
 import requests
 import json
@@ -70,6 +71,7 @@ def index():
     qr.add_data(dynamic_url)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
+    resized_img = img.resize((190, 190), Image.ANTIALIAS)
     img.save("static/images/dynamic_url_qr.png")  # Save the QR code image to a file
 
     # Set the prompt based on the language
