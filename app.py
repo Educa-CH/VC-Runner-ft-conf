@@ -147,13 +147,13 @@ def name():
         # Set the prompt based on the language
         if session['lang'] == 'de':
             prompt = 'Bitte füllen Sie das Formular aus und klicken Sie auf «absenden».'
-            name = 'Name:'
-            surname = 'Vorname:'
+            prename = 'Vorname:'
+            surname = 'Name:'
             button = 'absenden'
         elif session['lang'] == 'fr':
             prompt = 'Veuillez remplir le formulaire et cliquer sur «envoyer».'
-            name = 'Nom:'
-            surname = 'Prénom:'
+            prename = 'Prénom:'
+            surname = 'Nom:'
             button = 'envoyer'
 
         #just show the page
