@@ -75,12 +75,12 @@ def index():
     # Set the prompt based on the language
     if session['lang'] == 'de':
         prompt = 'Scannen Sie den QR-Code mit Ihrer elektronischen Brieftasche (Lissi Wallet) und folgen Sie den weiteren Schritten in der App.'
-        notice = 'Hinweis: Der Educa Agent dient nur zu Demonstrationszwecken und ist daher nicht verifiziert. Bitte nehmen Sie die Verbindungseinladung trotzdem an.'
+        #notice = 'Hinweis: Der Educa Agent dient nur zu Demonstrationszwecken und ist daher nicht verifiziert. Bitte nehmen Sie die Verbindungseinladung trotzdem an.'
     elif session['lang'] == 'fr':
         prompt = 'Scannez le code QR avec votre portefeuille électronique (Lissi wallet) et suivez les étapes suivantes dans l\'application.'
-        notice = 'Remarque: l\'Educa Agent ne sert qu\'à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter l\'invitation pour vous connecter.'
+        #notice = 'Remarque: l\'Educa Agent ne sert qu\'à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter l\'invitation pour vous connecter.'
 
-    return render_template('index.html', qr_image='static/images/dynamic_url_qr.png', prompt=prompt, notice=notice)
+    return render_template('index.html', qr_image='static/images/dynamic_url_qr.png', prompt=prompt)
 
 @app.route('/check-connection/')
 def check_connection():
@@ -134,12 +134,12 @@ def name():
 
             if session['lang'] == 'de':
                 prompt = 'Bitte akzeptieren Sie den gesendeten digitalen Nachweis in Ihrer elektronischen Brieftasche (Lissi Wallet).'
-                notice = 'Hinweis: Der Educa Agent dient nur zu Demonstrationszwecken und ist daher nicht verifiziert. Bitte nehmen Sie den digitalen Nachweis trotzdem an.'
+                #notice = 'Hinweis: Der Educa Agent dient nur zu Demonstrationszwecken und ist daher nicht verifiziert. Bitte nehmen Sie den digitalen Nachweis trotzdem an.'
             elif session['lang'] == 'fr':
                 prompt = 'Veuillez accepter le justificatif numérique envoyé dans votre portefeuille électronique (Lissi wallet).'   
-                notice = 'Remarque: l\'Educa Agent ne sert qu\'à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter le justificatif numérique.' 
+                #notice = 'Remarque: l\'Educa Agent ne sert qu\'à des fins de démonstration et n\'est donc pas vérifié. Veuillez tout de même accepter le justificatif numérique.' 
 
-            return render_template('loading.html', prompt=prompt, notice=notice)
+            return render_template('loading.html', prompt=prompt)
 
         else:
             return render_template('failure.html')    
