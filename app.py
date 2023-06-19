@@ -121,12 +121,6 @@ def name():
             url,
             json=data,
             headers=headers)
-        
-        # api call to "make" which acts as DB
-        requests.post(
-            'https://hook.eu1.make.com/jfjdbozvzudhgjev3f8mwvv8gl49fmq8',
-            json=data,
-            headers=headers)
 
         if response.status_code == 200:
             data = json.loads(response.text)
@@ -175,9 +169,9 @@ def loading():
 @app.route('/success')
 def success():
     if session['lang'] == 'de':
-        prompt = 'Herzliche Gratulation, Sie haben soeben die Anmeldung zur Fachtagung als digitalen Nachweis erhalten.'
+        prompt = 'Herzliche Gratulation, Sie haben soeben die Teilnahmebestätigung zur Fachtagung als digitalen Nachweis erhalten.'
     elif session['lang'] == 'fr':
-        prompt = 'Félicitations, vous venez de recevoir votre inscription au colloque sous forme de justificatif numérique.'
+        prompt = 'Félicitations, vous venez de recevoir votre confirmation de participation au colloque sous forme de justificatif numérique.'
     return render_template('success.html', prompt=prompt)        
   
 
